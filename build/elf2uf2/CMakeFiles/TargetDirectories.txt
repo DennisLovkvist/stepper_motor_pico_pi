@@ -1,5 +1,0 @@
-/home/delo/Dropbox/raspberry_pi/pico/projects/stepper_motor/build/elf2uf2/CMakeFiles/rebuild_cache.dir
-/home/delo/Dropbox/raspberry_pi/pico/projects/stepper_motor/build/elf2uf2/CMakeFiles/edit_cache.dir
-/home/delo/Dropbox/raspberry_pi/pico/projects/stepper_motor/build/elf2uf2/CMakeFiles/elf2uf2.dir
-/home/delo/Dropbox/raspberry_pi/pico/projects/stepper_motor/build/elf2uf2/boot_uf2_headers/CMakeFiles/rebuild_cache.dir
-/home/delo/Dropbox/raspberry_pi/pico/projects/stepper_motor/build/elf2uf2/boot_uf2_headers/CMakeFiles/edit_cache.dir
