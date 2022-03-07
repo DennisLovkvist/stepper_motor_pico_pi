@@ -75,13 +75,13 @@ int control_motor(int adc, int invert)
 //core1
 void core1_entry()
 {
-    bool lol = true;
+    bool laser = true;
 
     while (1)
     {        
         
-        gpio_put(1,lol);
-        lol = !lol;
+        gpio_put(1,laser);
+        laser = !laser;
         sleep_ms(100);
     }
     
