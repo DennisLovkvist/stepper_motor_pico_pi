@@ -30,6 +30,7 @@ pico_enable_stdio_usb(stepper_motor 0)
 # Add the standard library to the build
 target_link_libraries(stepper_motor pico_stdlib)
 target_link_libraries(stepper_motor hardware_adc)
+target_link_libraries(stepper_motor pico_multicore)
 # Add any user requested libraries
 target_link_libraries(stepper_motor
         hardware_spi

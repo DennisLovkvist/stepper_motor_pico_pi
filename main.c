@@ -2,6 +2,9 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
+#include <stdbool.h>
+#include "pico/multicore.h"
+
 const int STEPS[4][4] = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 const int STEPS_FULL_ROTATION = 2060;
 
@@ -86,20 +89,34 @@ int control_motor(int adc, int invert)
         }
     }
 }
+
+//core1
+void core1_entry()
+{
+    bool lol = true;
+
+    while (1)
+    {        
+        
+        gpio_put(1,lol);
+        lol = !lol;
+        sleep_ms(100);
+    }
+    
+}
+//core0
 int main() 
 {       
    
-
     stdio_init_all();
 
-    Motor motor_1;
-    Motor motor_2;
-    
-    //define_motor(&motor_0,13,12,11,10,1);
-    define_motor(&motor_1,18,19,20,21,1);
-    define_motor(&motor_2,13,12,11,10,1);
 
+    Motor motor_1;
+    define_motor(&motor_1,18,19,20,21,1);
     init_motor(&motor_1);
+    
+    Motor motor_2;
+    define_motor(&motor_2,13,12,11,10,1);
     init_motor(&motor_2);
     
 
@@ -108,30 +125,26 @@ int main()
     adc_gpio_init(27);
     adc_gpio_init(28);
 
-    gpio_init(16);    
-    gpio_set_dir(16, 0);  
-    gpio_pull_up(16);
+    gpio_init(1);    
+    gpio_set_dir(1, 1); 
 
-     gpio_init(1);    
-    gpio_set_dir(1, 1);  
+    
 
-    while (true) 
-    {
+    multicore_launch_core1(core1_entry);
 
+    while (1) 
+    {    
+           
+        sleep_ms(3);
+        if(motor_1.increment != 0)update_motor(&motor_1);
+        motor_1.increment = control_motor(1,0);
         
-                sleep_ms(3);
-                if(motor_1.increment != 0)update_motor(&motor_1);
-                sleep_ms(3);
-                if(motor_2.increment != 0)update_motor(&motor_2);
+        sleep_ms(3);
+        if(motor_2.increment != 0)update_motor(&motor_2);        
+        motor_2.increment = control_motor(2,0);
 
-                motor_1.increment = control_motor(1,0);
-                motor_2.increment = control_motor(2,0);
-        
-        
-        
-        
+       
     }
 }
-
 
 
