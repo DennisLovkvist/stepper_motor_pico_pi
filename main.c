@@ -9,7 +9,6 @@ const int STEPS[4][4] = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}};
 const int STEPS_FULL_ROTATION = 2060;
 
 typedef struct Motor Motor;
-typedef struct Joystick Joystick;
 
 struct Motor
 {    
