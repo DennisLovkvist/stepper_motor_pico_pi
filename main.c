@@ -16,24 +16,6 @@ struct Motor
     int gpio_step, world_step, increment;
     uint GPIO_PINS[4];
 };
-struct Joystick
-{    
-    uint GPIO_PIN_VRX;
-    uint GPIO_PIN_VRY;
-};
-void init_joystick(Joystick *joystick)
-{
-    
-    //gpio_init(joystick->GPIO_PIN_VRX);  
-    //gpio_init(joystick->GPIO_PIN_VRY);    
-    //gpio_set_dir(joystick->GPIO_PIN_VRX, GPIO_IN);  
-    //gpio_set_dir(joystick->GPIO_PIN_VRY, GPIO_IN);  
-}
-void define_joystick(Joystick *joystick, uint vrx, uint vry)
-{
-    joystick->GPIO_PIN_VRX = vrx;
-    joystick->GPIO_PIN_VRY = vry;
-}
 void define_motor(Motor *motor, uint pin_0, uint pin_1, uint pin_2, uint pin_3, int increment)
 {
     motor->GPIO_PINS[0] = pin_0;
@@ -106,10 +88,8 @@ void core1_entry()
 }
 //core0
 int main() 
-{       
-   
+{          
     stdio_init_all();
-
 
     Motor motor_1;
     define_motor(&motor_1,18,19,20,21,1);
@@ -117,18 +97,14 @@ int main()
     
     Motor motor_2;
     define_motor(&motor_2,13,12,11,10,1);
-    init_motor(&motor_2);
-    
-
+    init_motor(&motor_2); 
     
     adc_init();
     adc_gpio_init(27);
     adc_gpio_init(28);
 
     gpio_init(1);    
-    gpio_set_dir(1, 1); 
-
-    
+    gpio_set_dir(1, 1);     
 
     multicore_launch_core1(core1_entry);
 
@@ -142,7 +118,6 @@ int main()
         sleep_ms(3);
         if(motor_2.increment != 0)update_motor(&motor_2);        
         motor_2.increment = control_motor(2,0);
-
        
     }
 }
